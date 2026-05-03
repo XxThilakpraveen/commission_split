@@ -1,0 +1,329 @@
+[
+  {
+    "product": "Aetna MAPD",
+    "policy_number": "P-1001",
+    "total_commission": 100.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 10.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 20.0,
+        "amount": 20.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 1,
+        "percentage": 30.0,
+        "amount": 30.0
+      },
+      {
+        "name": "HARINEE",
+        "level_index": 0,
+        "percentage": 40.0,
+        "amount": 40.0
+      }
+    ],
+    "rule_reasoning": "Extracted levels and percentages directly from the rule statement, with the agent at level 0, followed by the reporting manager and manager's manager at levels 1 and 2, respectively, and the agency at level -1.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Aetna MAPD",
+    "policy_number": "P-1002",
+    "total_commission": 200.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 20.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 20.0,
+        "amount": 40.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 1,
+        "percentage": 70.0,
+        "amount": 140.0
+      }
+    ],
+    "rule_reasoning": "The percentages for each level were directly extracted from the rule, with agent at 0, reporting manager at 1, reporting manager's manager at 2, and agency at -1, summing to 100.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Aetna MAPD",
+    "policy_number": "P-1003",
+    "total_commission": 300.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 30.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 90.0,
+        "amount": 270.0
+      }
+    ],
+    "rule_reasoning": "The rule states specific percentages for each role explicitly, aligning them with the correct hierarchy levels based on the level index mapping provided.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Humana PPO",
+    "policy_number": "P-1004",
+    "total_commission": 150.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 20.0,
+        "amount": 30.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 1,
+        "percentage": 30.0,
+        "amount": 45.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 0,
+        "percentage": 25.0,
+        "amount": 37.5
+      },
+      {
+        "name": "HARINEE",
+        "level_index": -2,
+        "percentage": 25.0,
+        "amount": 37.5
+      }
+    ],
+    "rule_reasoning": "The rule specifies that the agent receives 50%, the reporting manager receives 30%, and the agency receives 20%, which corresponds to their respective hierarchy levels.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Humana PPO",
+    "policy_number": "P-1005",
+    "total_commission": 250.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 20.0,
+        "amount": 50.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 1,
+        "percentage": 30.0,
+        "amount": 75.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 0,
+        "percentage": 50.0,
+        "amount": 125.0
+      }
+    ],
+    "rule_reasoning": "The agent was assigned 50%, the reporting manager 30%, and the agency 20%, which corresponds to their respective levels.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "UnitedHealth HMO",
+    "policy_number": "P-1006",
+    "total_commission": 500.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 50.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 20.0,
+        "amount": 100.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 1,
+        "percentage": 30.0,
+        "amount": 150.0
+      },
+      {
+        "name": "HARINEE",
+        "level_index": 0,
+        "percentage": 40.0,
+        "amount": 200.0
+      }
+    ],
+    "rule_reasoning": "Extracted percentages and roles directly from the provided sentence, assigning levels according to the specified hierarchy and ensuring they sum to 100.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "UnitedHealth HMO",
+    "policy_number": "P-1007",
+    "total_commission": 400.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 40.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 90.0,
+        "amount": 360.0
+      }
+    ],
+    "rule_reasoning": "The rule explicitly states the percentages assigned to the agent (40%), the direct manager (30%), the manager's manager (20%), and the agency (10%).",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Cigna PDP",
+    "policy_number": "P-1008",
+    "total_commission": 120.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 40.0,
+        "amount": 48.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 0,
+        "percentage": 30.0,
+        "amount": 36.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": -2,
+        "percentage": 15.0,
+        "amount": 18.0
+      },
+      {
+        "name": "HARINEE",
+        "level_index": -2,
+        "percentage": 15.0,
+        "amount": 18.0
+      }
+    ],
+    "rule_reasoning": "The agent receives 60% commission, while the agency receives 40%, fulfilling the total of 100%.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "Cigna PDP",
+    "policy_number": "P-1009",
+    "total_commission": 80.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 40.0,
+        "amount": 32.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 0,
+        "percentage": 30.0,
+        "amount": 24.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": -2,
+        "percentage": 30.0,
+        "amount": 24.0
+      }
+    ],
+    "rule_reasoning": "The rule explicitly states that the agent receives 60% and the agency receives 40%, matching the defined levels.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "BlueCross Medigap",
+    "policy_number": "P-1010",
+    "total_commission": 600.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 60.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 20.0,
+        "amount": 120.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 1,
+        "percentage": 35.0,
+        "amount": 210.0
+      },
+      {
+        "name": "HARINEE",
+        "level_index": 0,
+        "percentage": 35.0,
+        "amount": 210.0
+      }
+    ],
+    "rule_reasoning": "Identified agent (35%), manager (35%), manager's manager (20%), and agency (10%) from the rule, with no ambiguity in the stated percentages.",
+    "rule_confidence": 1.0
+  },
+  {
+    "product": "BlueCross Medigap",
+    "policy_number": "P-1011",
+    "total_commission": 450.0,
+    "splits": [
+      {
+        "name": "AGENCY",
+        "level_index": -1,
+        "percentage": 10.0,
+        "amount": 45.0
+      },
+      {
+        "name": "PRAVEEN",
+        "level_index": 2,
+        "percentage": 20.0,
+        "amount": 90.0
+      },
+      {
+        "name": "THILAK",
+        "level_index": 1,
+        "percentage": 35.0,
+        "amount": 157.5
+      },
+      {
+        "name": "HARINEE",
+        "level_index": 0,
+        "percentage": 17.5,
+        "amount": 78.75
+      },
+      {
+        "name": "KAVYA",
+        "level_index": -2,
+        "percentage": 17.5,
+        "amount": 78.75
+      }
+    ],
+    "rule_reasoning": "The rule specifies commission percentages for the agent, manager, manager's manager, and agency directly, with specified amounts.",
+    "rule_confidence": 1.0
+  }
+]
