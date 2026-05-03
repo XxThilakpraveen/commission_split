@@ -1,5 +1,5 @@
-"""CrewAI agent definitions. Only product matching and rule parsing use LLM —
-hierarchy traversal and commission math are handled deterministically in crew.py."""
+"""CrewAI agent definitions. Only rule parsing uses LLM —
+product matching, hierarchy traversal, and commission math are handled deterministically in crew.py."""
 
 import os
 
@@ -25,22 +25,6 @@ def _agent(role: str, goal: str, backstory: str, llm: LLM | None = None) -> Agen
         max_execution_time=120,
         allow_delegation=False,
         **kwargs,
-    )
-
-
-def create_product_matcher_agent(llm: LLM | None = None) -> Agent:
-    return _agent(
-        role="Product matcher",
-        goal=(
-            "Find the product in the catalog that matches the given name "
-            "and return its id and rule as JSON."
-        ),
-        backstory=(
-            "You do exact or fuzzy case-insensitive name matching against a product catalog. "
-            "You always return a JSON object with product_name, product_id, and rule. "
-            "If no match exists, return the closest entry."
-        ),
-        llm=llm,
     )
 
 
