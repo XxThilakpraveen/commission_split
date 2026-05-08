@@ -36,12 +36,12 @@ print("Created data/products.xlsx")
 wb = openpyxl.Workbook()
 ws = wb.active
 ws.append(["id", "name", "reporting id"])
-ws.append([4, "kavya",   1])   # reports to harinee
-ws.append([1, "harinee", 2])   # reports to thilak
-ws.append([2, "thilak",  3])   # reports to praveen
-ws.append([3, "praveen", "-"]) # top of chain
+ws.append([4, "Tom",   1])     # reports to Tony
+ws.append([1, "Tony", 2])      # reports to thilak
+ws.append([2, "Thilak",  3])   # reports to praveen
+ws.append([3, "Praveen", "-"]) # top of chain
 wb.save("data/agents.xlsx")
-print("Created data/agents.xlsx (kavya→harinee→thilak→praveen)")
+print("Created data/agents.xlsx (tom→tony→thilak→praveen)")
 
 # ── statement.xlsx ─────────────────────────────────────────────────────────────
 wb = openpyxl.Workbook()
@@ -49,10 +49,10 @@ ws = wb.active
 ws.append(["product", "policy", "commission", "agent id"])
 
 # Aetna MAPD  — 3-level rule (40/30/20/10)
-ws.append(["Aetna MAPD",        "P-1001", 100, 1])   # full chain: HARINEE→THILAK→PRAVEEN
+ws.append(["Aetna MAPD",        "P-1001", 100, 1])   # full chain: TONY→THILAK→PRAVEEN
 ws.append(["Aetna MAPD",        "P-1002", 200, 2])   # 2-agent chain: THILAK→PRAVEEN (rollup lvl 0)
 ws.append(["Aetna MAPD",        "P-1003", 300, 3])   # 1-agent chain: PRAVEEN only  (rollup lvl 0+1)
-ws.append(["Aetna MAPD",        "P-1012", 200, 4])   # subagent: KAVYA under HARINEE(0) → 50/50 split
+ws.append(["Aetna MAPD",        "P-1012", 200, 4])   # subagent: TOM under TONY(0) → 50/50 split
 
 # Humana PPO  — 2-level rule (50/30/20)
 ws.append(["Humana PPO",        "P-1004", 150, 1])   # full chain

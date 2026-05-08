@@ -29,11 +29,16 @@ Return a JSON object with these keys:
   - "reasoning"  → one sentence explaining how you identified each level and percentage
   - "confidence" → float 0.0–1.0 reflecting how clearly the rule stated the values
                    (1.0 = perfectly explicit, 0.5 = some ambiguity, <0.5 = guessed)
+  - "subagent_percentage" → if the rule explicitly mentions how subagents are compensated
+                   (e.g. "subagent gets 50% of agent's commission", "50-50 split for subagents"),
+                   extract the subagent's share as a number 0–100.
+                   Set to null if the rule does not mention subagents at all.
 
 Rules:
   • Extract only what is stated — never invent percentages.
   • All percentages must sum to exactly 100.
   • Do not include any level not mentioned in the rule.
+  • Do not invent a subagent_percentage — only set it when the rule explicitly states it.
 
 Output raw JSON only. No markdown, no code fences, no explanation.""",
         expected_output='Raw JSON with "levels" array, "reasoning" string, and "confidence" float.',

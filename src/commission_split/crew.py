@@ -100,7 +100,7 @@ def build_hierarchy(agent_id: int, agents_data: list[dict], max_rule_level: int)
     Top-anchored level assignment (levels are FIXED by org position, not by who
     happens to be the selling agent in a given statement):
 
-      chain length 3, max_rule_level=2:  HARINEE=0, THILAK=1, PRAVEEN=2
+      chain length 3, max_rule_level=2:  TONY=0, THILAK=1, PRAVEEN=2
       chain length 2, max_rule_level=2:  THILAK=1,  PRAVEEN=2   (level 0 absent)
       chain length 1, max_rule_level=2:  PRAVEEN=2              (levels 0,1 absent)
 
@@ -151,7 +151,7 @@ def build_hierarchy(agent_id: int, agents_data: list[dict], max_rule_level: int)
         # will redistribute their percentages upward.
         # Topmost agent → max_rule_level, counting down toward 0.
         #
-        #  chain 3, max=2:  HARINEE=0  THILAK=1  PRAVEEN=2      (full match)
+        #  chain 3, max=2:  TONY=0  THILAK=1  PRAVEEN=2          (full match)
         #  chain 2, max=2:             THILAK=1  PRAVEEN=2      (level 0 absent → rollup)
         #  chain 1, max=2:                       PRAVEEN=2      (levels 0,1 absent → rollup)
         for pos, (aid, name) in enumerate(chain):
@@ -164,8 +164,8 @@ def build_hierarchy(agent_id: int, agents_data: list[dict], max_rule_level: int)
         # receives 50% of the person directly above them in the chain after the normal
         # split is computed (handled in calculate_commission).
         #
-        #  chain 4, max=2:  KAVYA=subagent-of-HARINEE  HARINEE=0  THILAK=1  PRAVEEN=2
-        #  chain 5, max=2:  KAVYA2=sub-of-KAVYA  KAVYA=sub-of-HARINEE  HARINEE=0  THILAK=1  PRAVEEN=2
+        #  chain 4, max=2:  TOM=subagent-of-TONY  TONY=0  THILAK=1  PRAVEEN=2
+        #  chain 5, max=2:  TOM2=sub-of-TOM  TOM=sub-of-TONY  TONY=0  THILAK=1  PRAVEEN=2
         num_subagents = chain_len - non_agency_rule_count
 
         # Top chain people get top-anchored levels (same formula as TOP-ANCHOR)
@@ -297,7 +297,8 @@ def calculate_commission(
             sub_id_to_split[member.agent_id] = CommissionSplit(
                 name=member.name, level_index=-2, percentage=0.0, amount=0.0)
             continue
-        stolen_pct = round(target.percentage / 2, 4)
+        split_ratio = (rule.subagent_percentage or 50.0) / 100
+        stolen_pct = round(target.percentage * split_ratio, 4)
         stolen_amt = round(total_commission * stolen_pct / 100, 2)
         target.percentage = stolen_pct
         target.amount = stolen_amt
@@ -314,11 +315,42 @@ def calculate_commission(
             if member.agent_id in id_to_split:
                 splits.append(id_to_split[member.agent_id])
 
+    # Structural confidence: the LLM only sees the rule text — it has no idea whether
+    # the actual hierarchy matches the rule's depth.  Penalise when it doesn't.
+    adjusted_confidence = rule.confidence
+    structural_notes: list[str] = []
+
+    rule_non_agency = {l.level_index for l in rule.levels if l.level_index != -1}
+    hier_non_agency = {m.level_index for m in normal_members if m.level_index != -1}
+
+    if any(m.is_subagent for m in hierarchy.members):
+        subagent_names = ", ".join(m.name for m in hierarchy.members if m.is_subagent)
+        structural_notes.append(
+            f"Hierarchy is deeper than the rule: {subagent_names} "
+            f"are not defined in the rule and were treated as subagents (50/50 split applied)."
+        )
+        adjusted_confidence = min(adjusted_confidence, 0.75)
+
+    missing_levels = rule_non_agency - hier_non_agency
+    if missing_levels:
+        missing_labels = [
+            l.label for l in rule.levels if l.level_index in missing_levels
+        ]
+        structural_notes.append(
+            f"Rule defines level(s) [{', '.join(missing_labels)}] that are absent from the "
+            f"actual hierarchy — their percentages were rolled up to the next available level."
+        )
+        adjusted_confidence = min(adjusted_confidence, 0.80)
+
+    adjusted_reasoning = rule.reasoning
+    if structural_notes:
+        adjusted_reasoning = rule.reasoning.rstrip(".") + ". Structural adjustments: " + " ".join(structural_notes)
+
     return CommissionResult(
         product=product,
         policy_number=policy_number,
         total_commission=total_commission,
         splits=splits,
-        rule_reasoning=rule.reasoning,
-        rule_confidence=rule.confidence,
+        rule_reasoning=adjusted_reasoning,
+        rule_confidence=adjusted_confidence,
     )

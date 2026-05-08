@@ -20,6 +20,14 @@ class ParsedRule(BaseModel):
     levels: list[RuleLevel] = Field(..., description="Commission levels ordered from agent (index 0) upward")
     reasoning: str = Field("", description="Short explanation of how the rule was interpreted")
     confidence: float = Field(1.0, ge=0.0, le=1.0, description="Confidence in the parse, 0.0–1.0")
+    subagent_percentage: float | None = Field(
+        None,
+        description=(
+            "If the rule explicitly declares how subagents are split "
+            "(e.g. 'subagent gets 50% of agent commission'), extract the subagent's share "
+            "as a number 0–100. Set to null if the rule is silent on subagents."
+        ),
+    )
 
 
 class HierarchyMember(BaseModel):

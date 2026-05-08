@@ -211,8 +211,30 @@ def main() -> None:
         hierarchy = crew.build_hierarchy(agent_id, agents_records, max_rule_level)
         console.print("  " + " → ".join(f"{m.name}({m.level_index})" for m in hierarchy.members))
 
-        # Step 4 & 5: calculate splits
-        console.print("[yellow]Step 4 & 5:[/yellow] Calculating splits…")
+        # Step 4: conflict check — subagents in hierarchy but rule is silent on subagent split
+        has_subagents = any(m.is_subagent for m in hierarchy.members)
+        if has_subagents and parsed_rule.subagent_percentage is None:
+            subagent_names = ", ".join(m.name for m in hierarchy.members if m.is_subagent)
+            console.print(
+                f"  [bold red]Conflict:[/bold red] {subagent_names} are subagents in the "
+                f"hierarchy but the rule does not declare a subagent split — skipping."
+            )
+            all_results.append({
+                "product": product_name,
+                "policy_number": policy_number,
+                "total_commission": commission,
+                "splits": [{"name": "CONFLICT", "level_index": -99, "percentage": 0.0, "amount": 0.0}],
+                "rule_reasoning": (
+                    f"Conflict: {subagent_names} exist in the hierarchy as subagent(s) "
+                    f"but the commission rule does not declare a subagent split percentage. "
+                    f"Manual resolution required."
+                ),
+                "rule_confidence": 0.0,
+            })
+            continue
+
+        # Step 5: calculate splits
+        console.print("[yellow]Step 5:[/yellow] Calculating splits…")
         result = crew.calculate_commission(
             hierarchy, parsed_rule, commission, product_name, policy_number
         )
